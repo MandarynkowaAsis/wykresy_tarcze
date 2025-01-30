@@ -1,4 +1,3 @@
-import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
@@ -6,14 +5,13 @@ import numpy as np
 
 
 def plot_density_chart(summary):
-    """Generuje wykres średniej gęstości z odchyleniami standardowymi i zapisuje go jako PNG."""
     plt.figure(figsize=(10, 6))
 
     # Tworzenie wykresu słupkowego
     ax = sns.barplot(x='Sample', y='mean', data=summary,
                      errorbar=None, palette='muted', hue='Sample', legend=False)
 
-    # Dodanie odchyleń standardowych jako error bars
+    # Dodanie odchyleń standardowych
     for i, row in summary.iterrows():
         plt.errorbar(x=i, y=row['mean'], yerr=row['std'], fmt='none',
                      color='black', capsize=5)
@@ -30,6 +28,4 @@ def plot_density_chart(summary):
     os.makedirs(output_folder, exist_ok=True)  # Tworzy folder, jeśli nie istnieje
 
     # Zapis wykresu do pliku PNG
-    output_path = os.path.join(output_folder, "density.png")
-    plt.savefig(output_path, dpi=300)
-    plt.close()
+    plt.savefig('outputs/density.png', dpi=300, bbox_inches='tight')

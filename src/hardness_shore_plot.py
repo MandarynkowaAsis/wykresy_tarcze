@@ -2,8 +2,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 
-def plot_bar_chart(summary):
 
+def plot_bar_chart(summary):
     plt.figure(figsize=(12, 6))
 
     # Wykres słupkowy z błędami, bez legendy
@@ -17,15 +17,15 @@ def plot_bar_chart(summary):
 
         # Przesunięcie w poziomie dla "Plate" i "Print"
         if summary['Plate/Print'].iloc[i] == 'Plate':
-            offset = -0.2  # Dla "Plate" przesuwamy odchylenia w lewo
+            offset = -0.2
         else:
-            offset = 0.2  # Dla "Print" przesuwamy w prawo
+            offset = 0.2
 
         # Pobieramy wartości dla yerr
         yerr_val = summary['std'][i]
         y_pos = summary['mean'][i]
 
-        # Rysowanie odchyleń standardowych (błędy)
+        # Rysowanie odchyleń standardowych
         ax.errorbar(x=x_pos + offset, y=y_pos, yerr=yerr_val, fmt='none',
                     color='black', capsize=5)
 
