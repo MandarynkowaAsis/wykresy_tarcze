@@ -1,44 +1,64 @@
-from hardness_shore_plot import plot_bar_chart
+from matplotlib import pyplot as plt
+from hardness_shore_plot import plot_hardness_shore_chart
 from density_plot import plot_density_chart
-from analyze import load_data, calculate_statistics
+from impact_tensile_plot import plot_impact_tensile_chart
+from hardness_ball_plot import plot_hardness_ball_chart
+from elongation_plot import plot_elongation_chart
+from tensile_plot import plot_tensile_chart
+from young_plot import plot_young_chart
+from analyze import load_data, calculate_statistics, save_summary_to_csv
 import os
 
-from src.impact_tensile_plot import plot_impact_tensile
-
-
-def save_summary_to_csv(summary, file_name):
-    output_dir = 'outputs'
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
-    # Zapis do CSV z 4 miejscami po przecinku
-    summary.to_csv(os.path.join(output_dir, file_name), index=False, float_format='%.4f')
-
+# Ustawienia globalne dla czcionki
+plt.rcParams.update({"font.family": "Times New Roman", "font.size": 11})
 
 # Pliki CSV
-hardness_shore_file = os.path.join('data', 'hardness_shore.csv')
-density_file = os.path.join('data', 'density.csv')
-impact_tensile_file = os.path.join('data', 'impact_tensile.csv')
+hardness_shore_file = os.path.join("data", "hardness_shore.csv")
+hardness_ball_file = os.path.join("data", "hardness.csv")
+density_file = os.path.join("data", "density.csv")
+impact_tensile_file = os.path.join("data", "impact_tensile.csv")
+young_file = os.path.join("data", "tensile.csv")
+tensile_file = os.path.join("data", "tensile.csv")
+elongation_file = os.path.join("data", "tensile.csv")
 
-# Przetwarzanie dla twardości Shore'a
+# Twardość Shore'a
 df_hardness_shore = load_data(hardness_shore_file)
-summary_hardness_shore = calculate_statistics(df_hardness_shore)
-save_summary_to_csv(summary_hardness_shore, 'hardness_shore_summary.csv')
-plot_bar_chart(summary_hardness_shore)
+summary_hardness_shore = calculate_statistics(df_hardness_shore, "Value")
+save_summary_to_csv(summary_hardness_shore, "hardness_shore_summary.csv")
+plot_hardness_shore_chart(summary_hardness_shore)
 
-# Przetwarzanie dla gęstości
+# Twardość metodą kulki
+df_hardness_ball = load_data(hardness_ball_file)
+summary_hardness_ball = calculate_statistics(df_hardness_ball, "H")
+save_summary_to_csv(summary_hardness_ball, "hardness_ball_summary.csv")
+plot_hardness_ball_chart(summary_hardness_ball)
+
+# Gęstość
 df_density = load_data(density_file)
-
-# **Sprawdzenie, czy 'Plate/Print' istnieje w danych**
-if 'Plate/Print' in df_density.columns:
-    summary_density = df_density.groupby(['Sample', 'Plate/Print'])['Value'].agg(['mean', 'std']).reset_index()
-else:
-    summary_density = df_density.groupby('Sample')['Value'].agg(['mean', 'std']).reset_index()
-save_summary_to_csv(summary_density, 'density_summary.csv')
+summary_density = calculate_statistics(df_density, "Value")
+save_summary_to_csv(summary_density, "density_summary.csv")
 plot_density_chart(summary_density)
 
-# **Przetwarzanie dla Impact Tensile**
+# Rozciąganie udarowe
 df_impact_tensile = load_data(impact_tensile_file)
-summary_impact_tensile = df_impact_tensile.groupby('Sample')['it'].agg(['mean', 'std']).reset_index()
-save_summary_to_csv(summary_impact_tensile, 'impact_tensile_summary.csv')
-plot_impact_tensile(summary_impact_tensile)  # Rysowanie wykresu dla Impact Tensile
+summary_impact_tensile = calculate_statistics(df_impact_tensile, "it")
+save_summary_to_csv(summary_impact_tensile, "impact_tensile_summary.csv")
+plot_impact_tensile_chart(summary_impact_tensile)
+
+# Moduł Younga
+df_young = load_data(young_file)
+summary_young = calculate_statistics(df_young, "E")
+save_summary_to_csv(summary_young, "young_summary.csv")
+plot_young_chart(summary_young)
+
+# Wytrzymałość na rozciąganie
+df_tensile = load_data(tensile_file)
+summary_tensile = calculate_statistics(df_tensile, "sm")
+save_summary_to_csv(summary_tensile, "tensile_summary.csv")
+plot_tensile_chart(summary_tensile)
+
+# Wydłużenie przy zerwaniu
+df_elongation = load_data(elongation_file)
+summary_elongation = calculate_statistics(df_elongation, "em")
+save_summary_to_csv(summary_elongation, "elongation_summary.csv")
+plot_elongation_chart(summary_elongation)

@@ -2,7 +2,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-def plot_hardness_shore_chart(summary):
+def plot_hardness_ball_chart(summary):
     plt.figure(figsize=(12, 7))
 
     # Zamiana nazw w legendzie
@@ -43,7 +43,7 @@ def plot_hardness_shore_chart(summary):
 
     # Ustawienia osi
     plt.xlabel("Nazwa próbki")
-    plt.ylabel("Twardość Shore'a [Shore D]")
+    plt.ylabel("Twardość metodą wciskania kulki (H)")
 
     # Zmiana pozycji legendy
     plt.legend(title="Legenda", loc="upper right", bbox_to_anchor=(1, 1))
@@ -55,4 +55,4 @@ def plot_hardness_shore_chart(summary):
     ax.set_ylim(0, summary["mean"].max() + 10)
 
     # Eksport wykresu do pliku PNG
-    plt.savefig("outputs/hardness_shore.png", dpi=300, bbox_inches="tight")
+    plt.savefig("outputs/hardness_ball.png", dpi=300, bbox_inches="tight")
