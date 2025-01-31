@@ -1,4 +1,4 @@
-Sample,Measurement,Plate/Print,h,h0,H,F
+Sample,Measurement,Plate/Print,h,h0,H,P
 PLA/F,1,Plate,0.23,0.08,100.76,358
 PLA/F,2,Plate,0.21,0.08,112.61,358
 PLA/F,3,Plate,0.24,0.11,95.72,358
@@ -31,16 +31,5 @@ PLA/R,1,Print,0.21,0.13,41.52,132
 PLA/R,2,Print,0.20,0.15,44.12,132
 PLA/R,3,Print,0.18,0.13,50.42,132
 PLA/R,4,Print,0.25,0.19,33.61,132
-PLA/R,5,Print,0.225,0.26,38.16,132
-PETG/R,1,Plate,,,,132
-PETG/R,2,Plate,,,,132
-PETG/R,3,Plate,,,,132
-PETG/R,4,Plate,,,,132
-PETG/R,5,Plate,,,,132
-PETG/R,6,Plate,,,,132
-PETG/R,1,Print,,,,132
-PETG/R,2,Print,,,,132
-PETG/R,3,Print,,,,132
-PETG/R,4,Print,,,,132
-PETG/R,5,Print,,,,132
-PETG/R,6,Print,,,,132
+PLA/R,5,Print,0.225,0.16,38.16,132
+

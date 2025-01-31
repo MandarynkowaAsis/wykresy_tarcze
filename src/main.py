@@ -4,9 +4,10 @@ from density_plot import plot_density_chart
 from impact_tensile_plot import plot_impact_tensile_chart
 from hardness_ball_plot import plot_hardness_ball_chart
 from elongation_plot import plot_elongation_chart
+from elasticity_plot import plot_elasticity_chart
 from tensile_plot import plot_tensile_chart
 from young_plot import plot_young_chart
-from analyze import load_data, calculate_statistics, save_summary_to_csv
+from analyze import load_data, calculate_statistics, save_summary_to_csv, calculate_elasticity
 import os
 
 # Ustawienia globalne dla czcionki
@@ -20,6 +21,7 @@ impact_tensile_file = os.path.join("data", "impact_tensile.csv")
 young_file = os.path.join("data", "tensile.csv")
 tensile_file = os.path.join("data", "tensile.csv")
 elongation_file = os.path.join("data", "tensile.csv")
+elasticity_file = os.path.join("data", "hardness.csv")
 
 # Twardość Shore'a
 df_hardness_shore = load_data(hardness_shore_file)
@@ -62,3 +64,10 @@ df_elongation = load_data(elongation_file)
 summary_elongation = calculate_statistics(df_elongation, "em")
 save_summary_to_csv(summary_elongation, "elongation_summary.csv")
 plot_elongation_chart(summary_elongation)
+
+# Współczynnik sprężystości wzdłużnej
+df_elasticity = load_data(elasticity_file)
+summary_elasticity = calculate_elasticity(df_elasticity)
+save_summary_to_csv(summary_elasticity, "elasticity_summary.csv")
+plot_elasticity_chart(summary_elasticity)
+
