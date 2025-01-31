@@ -3,6 +3,8 @@ from density_plot import plot_density_chart
 from analyze import load_data, calculate_statistics
 import os
 
+from src.impact_tensile_plot import plot_impact_tensile
+
 
 def save_summary_to_csv(summary, file_name):
     output_dir = 'outputs'
@@ -16,6 +18,7 @@ def save_summary_to_csv(summary, file_name):
 # Pliki CSV
 hardness_shore_file = os.path.join('data', 'hardness_shore.csv')
 density_file = os.path.join('data', 'density.csv')
+impact_tensile_file = os.path.join('data', 'impact_tensile.csv')
 
 # Przetwarzanie dla twardości Shore'a
 df_hardness_shore = load_data(hardness_shore_file)
@@ -33,3 +36,9 @@ else:
     summary_density = df_density.groupby('Sample')['Value'].agg(['mean', 'std']).reset_index()
 save_summary_to_csv(summary_density, 'density_summary.csv')
 plot_density_chart(summary_density)
+
+# **Przetwarzanie dla Impact Tensile**
+df_impact_tensile = load_data(impact_tensile_file)
+summary_impact_tensile = df_impact_tensile.groupby('Sample')['it'].agg(['mean', 'std']).reset_index()
+save_summary_to_csv(summary_impact_tensile, 'impact_tensile_summary.csv')
+plot_impact_tensile(summary_impact_tensile)  # Rysowanie wykresu dla Impact Tensile
