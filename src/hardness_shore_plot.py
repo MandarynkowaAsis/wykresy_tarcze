@@ -1,6 +1,5 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
-import os
 
 
 def plot_bar_chart(summary):

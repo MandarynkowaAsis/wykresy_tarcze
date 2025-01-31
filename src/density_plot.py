@@ -17,7 +17,7 @@ def plot_density_chart(summary):
                      color='black', capsize=5)
 
     # Dodanie linii siatki co 0.1
-    ax.set_yticks(np.arange(0, summary['mean'].max() + 0.1, 0.1))
+    ax.set_yticks(np.arange(0, summary['mean'].max() + 100, 200))
     plt.grid(axis='y', linestyle='--', alpha=0.7)
 
     plt.xlabel('Nazwa próbki')

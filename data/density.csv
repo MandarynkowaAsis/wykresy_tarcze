@@ -1,13 +1,13 @@
 Sample,Measurement,Value
-PLA filament,1,
-PLA filament,2,0
-PLA filament,3,
-PET-G filament,1,0
-PET-G filament,2,
-PET-G filament,3,
-PLA regranulat,1,1.24587156
-PLA regranulat,2,1.276764843
-PLA regranulat,3,1.240608654
-PET-G regranulat,1,1.197730249
-PET-G regranulat,2,1.215293582
-PET-G regranulat,3,
+PLA/F,1,1287.17
+PLA/F,2,1263.95
+PLA/F,3,1239.15
+PET-G/F,1,1231.24
+PET-G/F,2,1253.86
+PET-G/F,3,1270.56
+PLA/R,1,1245.87
+PLA/R,2,1276.76
+PLA/R,3,1240.61
+PET-G/R,1,1197.73
+PET-G/R,2,1215.29
+PET-G/R,3,1214.46

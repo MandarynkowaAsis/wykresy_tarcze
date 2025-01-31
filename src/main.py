@@ -1,5 +1,3 @@
-import os
-import pandas as pd
 from hardness_shore_plot import plot_bar_chart
 from density_plot import plot_density_chart
 from analyze import load_data, calculate_statistics
