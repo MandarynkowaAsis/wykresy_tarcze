@@ -25,8 +25,10 @@ def calculate_elasticity(df):
     df["h"] = df["h"] / 1000  # h w metrach
     df["h0"] = df["h0"] / 1000  # h0 w metrach
 
-    df["E2"] = 13.65 * (df["P"] - 9.81) / ((df["h"] - df["h0"]) * np.sqrt(df["h"] - df["h0"]))
-    df["E2"] = df["E2"] / 1_000_000  # Przekształcenie z Pa na MPa
+    df["E2"] = (
+        13.65 * (df["P"] - 9.81) / ((df["h"] - df["h0"]) * np.sqrt(df["h"] - df["h0"]))
+    )
+    df["E2"] = df["E2"] / 1000000  # Przekształcenie z Pa na MPa
 
     # Grupowanie po "Sample" i "Plate/Print", jeśli kolumna "Plate/Print" istnieje
     if "Plate/Print" in df.columns:
@@ -44,4 +46,6 @@ def calculate_elasticity(df):
 def save_summary_to_csv(summary, file_name):
     output_dir = "outputs"
     os.makedirs(output_dir, exist_ok=True)
-    summary.to_csv(os.path.join(output_dir, file_name), index=False, float_format="%.4f")
+    summary.to_csv(
+        os.path.join(output_dir, file_name), index=False, float_format="%.4f"
+    )
