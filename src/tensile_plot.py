@@ -29,7 +29,7 @@ def plot_tensile_chart(summary):
     plt.grid(axis="y", linestyle="--", alpha=0.7)
 
     plt.xlabel("Nazwa próbki")
-    plt.ylabel(r"Wytrzymałość ($\sigma_m$) [MPa]")
+    plt.ylabel(r"Wytrzymałość na rozciaganie ($\sigma_m$) [MPa]")
 
     # Ścieżka do folderu output
     output_folder = "outputs"
