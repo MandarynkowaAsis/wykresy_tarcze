@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def plot_contact_angle_chart(summary):
-    plt.figure(figsize=(12, 7))
+    plt.figure(figsize=(10, 6))
 
     # Zamiana nazw w legendzie
     summary["Legenda"] = summary["Plate/Print"].replace(
@@ -25,8 +25,12 @@ def plot_contact_angle_chart(summary):
     # Dodanie odchyleń standardowych
     for i in range(len(summary)):
         # Uzyskiwanie pozycji słupków
-        x_pos = summary["Sample"].unique().tolist().index(summary["Sample"].iloc[i])  # Indeks próbki
-        hue_offset = -0.2 if summary["Plate/Print"].iloc[i] == "Plate" else 0.2  # Przesunięcie w poziomie dla "Plate" i "Print"
+        x_pos = (
+            summary["Sample"].unique().tolist().index(summary["Sample"].iloc[i])
+        )  # Indeks próbki
+        hue_offset = (
+            -0.2 if summary["Plate/Print"].iloc[i] == "Plate" else 0.2
+        )  # Przesunięcie w poziomie dla "Plate" i "Print"
 
         yerr_val = summary["Std_CA"].iloc[i]  # Odchylenie standardowe
         y_pos = summary["Mean_CA"].iloc[i]  # Średnia wartość kąta zwilżania
@@ -46,7 +50,7 @@ def plot_contact_angle_chart(summary):
     plt.ylabel("Kąt zwilżania [°]")  # Zmieniamy jednostki na stopnie
 
     # Zmiana pozycji legendy
-    plt.legend(title="Legenda", loc="upper right", bbox_to_anchor=(1, 1))
+    plt.legend(title="Powierzchnia", loc="upper right", bbox_to_anchor=(1, 1))
 
     # Linie siatki
     ax.grid(True, which="both", axis="y", linestyle="--", linewidth=0.5, alpha=0.5)
@@ -56,11 +60,3 @@ def plot_contact_angle_chart(summary):
 
     # Eksport wykresu do pliku PNG
     plt.savefig("outputs/contact_angle.png", dpi=300, bbox_inches="tight")
-
-
-# Załaduj dane z pliku CSV
-contact_angle_file = "data/contact_angle.csv"  # Podaj właściwą ścieżkę
-df_contact_angle = pd.read_csv(contact_angle_file)
-
-# Wywołanie funkcji do generowania wykresu
-plot_contact_angle_chart(df_contact_angle)

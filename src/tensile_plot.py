@@ -1,11 +1,19 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
-import os
 import numpy as np
+import analyze
 
 
-def plot_tensile_chart(summary):
+def plot_tensile_chart(summary, column_name):
     plt.figure(figsize=(10, 6))
+
+    # Mapowanie nazw kolumn na etykiety osi Y
+    y_labels = {
+        "E": r"Moduł Younga ($E$) [MPa]",
+        "sm": r"Wytrzymałość na rozciąganie ($\sigma_m$) [MPa]",
+        "em": r"Wydłużenie przy zerwaniu ($\varepsilon_m$) [%]",
+    }
+    y_label = y_labels.get(column_name, column_name)  # Jeśli brak, użyj nazwy kolumny
 
     # Tworzenie wykresu słupkowego
     ax = sns.barplot(
@@ -25,17 +33,18 @@ def plot_tensile_chart(summary):
         )
 
     # Ustawienie siatki
-    ax.set_yticks(np.arange(0, summary["mean"].max() + 10, 10))
+    max_value = summary["mean"].max()
+    ax.set_yticks(
+        np.arange(
+            0,
+            summary["mean"].max() + summary["mean"].max() * 0.1,
+            analyze.nice_tick_step(max_value),
+        )
+    )
     plt.grid(axis="y", linestyle="--", alpha=0.7)
 
     plt.xlabel("Nazwa próbki")
-    plt.ylabel(r"Wytrzymałość na rozciaganie ($\sigma_m$) [MPa]")
-
-    # Ścieżka do folderu output
-    output_folder = "outputs"
-    os.makedirs(output_folder, exist_ok=True)  # Tworzy folder, jeśli nie istnieje
+    plt.ylabel(y_label)  # Dynamiczny opis osi Y
 
     # Zapis wykresu do pliku PNG
-    plt.savefig(
-        os.path.join(output_folder, "tensile.png"), dpi=300, bbox_inches="tight"
-    )
+    plt.savefig(f"outputs/tensile_{column_name}.png", dpi=300, bbox_inches="tight")

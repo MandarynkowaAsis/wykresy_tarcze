@@ -1,14 +1,13 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
-import numpy as np
 
 
-def plot_elasticity_chart(summary):
+def plot_impact_tensile_temp_chart(summary):
     plt.figure(figsize=(10, 6))
 
     # Zamiana nazw w legendzie
-    summary["Legenda"] = summary["Plate/Print"].replace(
-        {"Plate": "Plate surface", "Print": "Free surface"}
+    summary["Legenda"] = (
+        summary["Temp"].astype(str).replace({"-7": "-7°C", "23": "23°C"})
     )
 
     # Wykres słupkowy
@@ -24,10 +23,10 @@ def plot_elasticity_chart(summary):
 
     # Dodanie odchyleń standardowych
     for i in range(len(summary)):
-        x_pos = i // 2  # Dzielimy na dwie grupy dla "Plate" i "Print"
+        x_pos = i // 2  # Dzielimy na dwie grupy dla dwóch temperatur
 
-        # Przesunięcie w poziomie dla "Plate Surface" i "Free Surface"
-        offset = -0.2 if summary["Plate/Print"].iloc[i] == "Plate" else 0.2
+        # Przesunięcie w poziomie dla temperatur
+        offset = -0.2 if summary["Temp"].iloc[i] == -7 else 0.2
 
         yerr_val = summary["std"][i]
         y_pos = summary["mean"][i]
@@ -44,17 +43,18 @@ def plot_elasticity_chart(summary):
 
     # Ustawienia osi
     plt.xlabel("Nazwa próbki")
-    plt.ylabel("Współczynnik sprężystości wzdłużnej (E) [MPa]")
+    plt.ylabel(
+        r"Rozciąganie udarowe w różnych temperaturach ($\sigma_{i}^{t}$) [kJ/m$^2$]"
+    )
 
     # Zmiana pozycji legendy
-    plt.legend(title="Powierzchnia", loc="upper right", bbox_to_anchor=(0.2, 1))
+    plt.legend(title="Temperatura", loc="upper right", bbox_to_anchor=(1, 1))
 
-    # Dodanie linii siatki
-    ax.set_yticks(np.arange(0, summary["mean"].max() + 1000, 500))
-    plt.grid(axis="y", linestyle="--", alpha=0.7)
+    # Linie siatki
+    ax.grid(True, which="both", axis="y", linestyle="--", linewidth=0.5, alpha=0.5)
 
     # Ustawienie zakresu na osi y
-    ax.set_ylim(0, summary["mean"].max() + 1100)
+    ax.set_ylim(0, summary["mean"].max() + 10)
 
     # Zapis wykresu do pliku PNG
-    plt.savefig("outputs/elasticity.png", dpi=300, bbox_inches="tight")
+    plt.savefig("outputs/impact_tensile_temp.png", dpi=300, bbox_inches="tight")

@@ -29,13 +29,7 @@ def plot_impact_tensile_chart(summary):
     plt.grid(axis="y", linestyle="--", alpha=0.7)
 
     plt.xlabel("Nazwa próbki")
-    plt.ylabel(r"Rozciąganie udarowe ($\sigma_{i}^{t}$)")
-
-    # Ścieżka do folderu output
-    output_folder = "outputs"
-    os.makedirs(output_folder, exist_ok=True)  # Tworzy folder, jeśli nie istnieje
+    plt.ylabel(r"Rozciąganie udarowe ($\sigma_{i}^{t}$) [kJ/m$^2$]")
 
     # Zapis wykresu do pliku PNG
-    plt.savefig(
-        os.path.join(output_folder, "impact_tensile.png"), dpi=300, bbox_inches="tight"
-    )
+    plt.savefig("outputs/impact_tensile.png", dpi=300, bbox_inches="tight")

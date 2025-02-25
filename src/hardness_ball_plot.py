@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 def plot_hardness_ball_chart(summary):
-    plt.figure(figsize=(12, 7))
+    plt.figure(figsize=(10, 6))
 
     # Zamiana nazw w legendzie
     summary["Legenda"] = summary["Plate/Print"].replace(
@@ -46,13 +46,13 @@ def plot_hardness_ball_chart(summary):
     plt.ylabel("Twardość metodą wciskania kulki (H)")
 
     # Zmiana pozycji legendy
-    plt.legend(title="Legenda", loc="upper right", bbox_to_anchor=(1, 1))
+    plt.legend(title="Powierzchnia", loc="upper right", bbox_to_anchor=(1, 1))
 
     # Linie siatki
     ax.grid(True, which="both", axis="y", linestyle="--", linewidth=0.5, alpha=0.5)
 
     # Ustawienie zakresu na osi y
-    ax.set_ylim(0, summary["mean"].max() + 10)
+    ax.set_ylim(0, summary["mean"].max() + 12)
 
     # Eksport wykresu do pliku PNG
     plt.savefig("outputs/hardness_ball.png", dpi=300, bbox_inches="tight")

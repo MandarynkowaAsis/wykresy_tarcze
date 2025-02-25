@@ -4,12 +4,17 @@ from hardness_shore_plot import plot_hardness_shore_chart
 from density_plot import plot_density_chart
 from impact_tensile_plot import plot_impact_tensile_chart
 from hardness_ball_plot import plot_hardness_ball_chart
-from elongation_plot import plot_elongation_chart
 from elasticity_plot import plot_elasticity_chart
+from impact_tensile_temp_plot import plot_impact_tensile_temp_chart
+from tensile_temp_plot import plot_tensile_temp_chart
 from tensile_plot import plot_tensile_chart
-from young_plot import plot_young_chart
 from contact_angle_plot import plot_contact_angle_chart
-from analyze import load_data, calculate_statistics, save_summary_to_csv, calculate_elasticity
+from analyze import (
+    load_data,
+    calculate_statistics,
+    save_summary_to_csv,
+    calculate_elasticity,
+)
 import os
 
 # Ustawienia globalne dla czcionki
@@ -20,11 +25,14 @@ hardness_shore_file = os.path.join("data", "hardness_shore.csv")
 hardness_ball_file = os.path.join("data", "hardness.csv")
 density_file = os.path.join("data", "density.csv")
 impact_tensile_file = os.path.join("data", "impact_tensile.csv")
+impact_tensile_temp_file = os.path.join("data", "impact_tensile_temp.csv")
 young_file = os.path.join("data", "tensile.csv")
 tensile_file = os.path.join("data", "tensile.csv")
 elongation_file = os.path.join("data", "tensile.csv")
 elasticity_file = os.path.join("data", "hardness.csv")
 contact_angle_file = os.path.join("data", "contact_angle.csv")
+tensile_temp_file = os.path.join("data", "tensile_temp.csv")
+
 
 # Twardość Shore'a
 df_hardness_shore = load_data(hardness_shore_file)
@@ -50,23 +58,47 @@ summary_impact_tensile = calculate_statistics(df_impact_tensile, "it")
 save_summary_to_csv(summary_impact_tensile, "impact_tensile_summary.csv")
 plot_impact_tensile_chart(summary_impact_tensile)
 
+# Rozciąganie udarowe w różnych temperaturach
+df_impact_tensile_temp = load_data(impact_tensile_temp_file)
+summary_impact_tensile_temp = calculate_statistics(df_impact_tensile_temp, "it")
+save_summary_to_csv(summary_impact_tensile_temp, "impact_tensile_frost_summary.csv")
+plot_impact_tensile_temp_chart(summary_impact_tensile_temp)
+
 # Moduł Younga
 df_young = load_data(young_file)
 summary_young = calculate_statistics(df_young, "E")
-save_summary_to_csv(summary_young, "young_summary.csv")
-plot_young_chart(summary_young)
+save_summary_to_csv(summary_young, "tensile_E_summary.csv")
+plot_tensile_chart(summary_young, "E")
+
+# Wydłużenie przy zerwaniu w różnych temperaturach
+df_tensile_temp = load_data(tensile_temp_file)
+summary_tensile_temp = calculate_statistics(df_tensile_temp, "E")
+save_summary_to_csv(summary_tensile_temp, "tensile_temp_E_summary.csv")
+plot_tensile_temp_chart(summary_tensile_temp, "E")
 
 # Wytrzymałość na rozciąganie
 df_tensile = load_data(tensile_file)
 summary_tensile = calculate_statistics(df_tensile, "sm")
-save_summary_to_csv(summary_tensile, "tensile_summary.csv")
-plot_tensile_chart(summary_tensile)
+save_summary_to_csv(summary_tensile, "tensile_sm_summary.csv")
+plot_tensile_chart(summary_tensile, "sm")
+
+# Wytrzymałość na rozciąganie w różnych temperaturach
+df_tensile_temp = load_data(tensile_temp_file)
+summary_tensile_temp = calculate_statistics(df_tensile_temp, "sm")
+save_summary_to_csv(summary_tensile_temp, "tensile_temp_sm_summary.csv")
+plot_tensile_temp_chart(summary_tensile_temp, "sm")
 
 # Wydłużenie przy zerwaniu
 df_elongation = load_data(elongation_file)
 summary_elongation = calculate_statistics(df_elongation, "em")
-save_summary_to_csv(summary_elongation, "elongation_summary.csv")
-plot_elongation_chart(summary_elongation)
+save_summary_to_csv(summary_elongation, "tensile_em_summary.csv")
+plot_tensile_chart(summary_elongation, "em")
+
+# Wydłużenie przy zerwaniu w różnych temperaturach
+df_tensile_temp = load_data(tensile_temp_file)
+summary_tensile_temp = calculate_statistics(df_tensile_temp, "em")
+save_summary_to_csv(summary_tensile_temp, "tensile_temp_em_summary.csv")
+plot_tensile_temp_chart(summary_tensile_temp, "em")
 
 # Współczynnik sprężystości wzdłużnej
 df_elasticity = load_data(elasticity_file)
@@ -74,6 +106,6 @@ summary_elasticity = calculate_elasticity(df_elasticity)
 save_summary_to_csv(summary_elasticity, "elasticity_summary.csv")
 plot_elasticity_chart(summary_elasticity)
 
-# Kąt zwilżania metodą kulki
-df_contact_angle_ball = pd.read_csv(contact_angle_file)
-plot_contact_angle_chart(df_contact_angle_ball)
+# Kąt zwilżania
+df_contact_angle = pd.read_csv(contact_angle_file)
+plot_contact_angle_chart(df_contact_angle)

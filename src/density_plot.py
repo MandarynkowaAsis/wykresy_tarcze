@@ -1,6 +1,5 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
-import os
 import numpy as np
 
 
@@ -30,10 +29,6 @@ def plot_density_chart(summary):
 
     plt.xlabel("Nazwa próbki")
     plt.ylabel(r"Gęstość $\rho$ [kg/m$^3$]")
-
-    # Ścieżka do folderu output
-    output_folder = "outputs"
-    os.makedirs(output_folder, exist_ok=True)  # Tworzy folder, jeśli nie istnieje
 
     # Zapis wykresu do pliku PNG
     plt.savefig("outputs/density.png", dpi=300, bbox_inches="tight")
