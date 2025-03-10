@@ -15,24 +15,53 @@ def plot_tensile_chart(summary, column_name):
     }
     y_label = y_labels.get(column_name, column_name)  # Jeśli brak, użyj nazwy kolumny
 
-    # Tworzenie wykresu słupkowego
+    # Zamiana nazw w legendzie dla różnych temperatur
+    summary["Legenda"] = summary["Thick"].map({2: "2 mm", 4: "4 mm"})
+
+    # Wykres słupkowy
     ax = sns.barplot(
         x="Sample",
         y="mean",
+        hue="Legenda",
         data=summary,
         errorbar=None,
+        capsize=0.1,
         palette="muted",
-        hue="Sample",
-        legend=False,
     )
 
+    # Pobranie unikalnych próbek i grubości
+    unique_samples = summary["Sample"].unique()
+    thick_offsets = {2: -0.2, 4: 0.2}
+
+    # Mapa indeksów dla pozycji słupków
+    sample_positions = {sample: i for i, sample in enumerate(unique_samples)}
+
     # Dodanie odchyleń standardowych
-    for i, row in summary.iterrows():
-        plt.errorbar(
-            x=i, y=row["mean"], yerr=row["std"], fmt="none", color="black", capsize=5
+    for i in range(len(summary)):
+        sample = summary["Sample"].iloc[i]
+        thick = summary["Thick"].iloc[i]
+        x_pos = sample_positions[sample] + thick_offsets[thick]  # Ustawienie pozycji
+        y_pos = summary["mean"].iloc[i]
+        yerr_val = summary["std"].iloc[i]
+
+        # Rysowanie odchyleń standardowych
+        ax.errorbar(
+            x=x_pos,
+            y=y_pos,
+            yerr=yerr_val,
+            fmt="none",
+            color="black",
+            capsize=5,
         )
 
-    # Ustawienie siatki
+    # Ustawienia osi
+    plt.xlabel("Nazwa próbki")
+    plt.ylabel(y_label)  # Dynamiczny opis osi Y
+
+    # Zmiana pozycji legendy
+    plt.legend(title="Grubość próbki", loc="upper right", bbox_to_anchor=(1, 1))
+
+    # Linie siatki
     max_value = summary["mean"].max()
     ax.set_yticks(
         np.arange(
@@ -43,8 +72,8 @@ def plot_tensile_chart(summary, column_name):
     )
     plt.grid(axis="y", linestyle="--", alpha=0.7)
 
-    plt.xlabel("Nazwa próbki")
-    plt.ylabel(y_label)  # Dynamiczny opis osi Y
+    # Ustawienie zakresu na osi y
+    ax.set_ylim(0, summary["mean"].max() * 1.1)
 
     # Zapis wykresu do pliku PNG
     plt.savefig(f"outputs/tensile_{column_name}.png", dpi=300, bbox_inches="tight")

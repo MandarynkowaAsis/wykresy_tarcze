@@ -1,9 +1,9 @@
 import pandas as pd
 from matplotlib import pyplot as plt
-from hardness_shore_plot import plot_hardness_shore_chart
+from hardness_shore_plot import plot_hardness_shore_surfaces_chart, plot_hardness_shore_plate_surface_chart
 from density_plot import plot_density_chart
 from impact_tensile_plot import plot_impact_tensile_chart
-from hardness_ball_plot import plot_hardness_ball_chart
+from hardness_ball_plot import plot_hardness_ball_surfaces_chart, plot_hardness_ball_plate_surface_chart
 from elasticity_plot import plot_elasticity_chart
 from impact_tensile_temp_plot import plot_impact_tensile_temp_chart
 from tensile_temp_plot import plot_tensile_temp_chart
@@ -38,13 +38,16 @@ tensile_temp_file = os.path.join("data", "tensile_temp.csv")
 df_hardness_shore = load_data(hardness_shore_file)
 summary_hardness_shore = calculate_statistics(df_hardness_shore, "Value")
 save_summary_to_csv(summary_hardness_shore, "hardness_shore_summary.csv")
-plot_hardness_shore_chart(summary_hardness_shore)
+plot_hardness_shore_surfaces_chart(summary_hardness_shore)
+plot_hardness_shore_plate_surface_chart(summary_hardness_shore)
+
 
 # Twardość metodą kulki
 df_hardness_ball = load_data(hardness_ball_file)
 summary_hardness_ball = calculate_statistics(df_hardness_ball, "H")
 save_summary_to_csv(summary_hardness_ball, "hardness_ball_summary.csv")
-plot_hardness_ball_chart(summary_hardness_ball)
+plot_hardness_ball_surfaces_chart(summary_hardness_ball)
+plot_hardness_ball_plate_surface_chart(summary_hardness_ball)
 
 # Gęstość
 df_density = load_data(density_file)
@@ -70,7 +73,7 @@ summary_young = calculate_statistics(df_young, "E")
 save_summary_to_csv(summary_young, "tensile_E_summary.csv")
 plot_tensile_chart(summary_young, "E")
 
-# Wydłużenie przy zerwaniu w różnych temperaturach
+# Moduł Younga w różnych temperaturach
 df_tensile_temp = load_data(tensile_temp_file)
 summary_tensile_temp = calculate_statistics(df_tensile_temp, "E")
 save_summary_to_csv(summary_tensile_temp, "tensile_temp_E_summary.csv")

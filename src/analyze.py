@@ -27,6 +27,12 @@ def calculate_statistics(df, column_name):
             .agg(["mean", "std"])
             .reset_index()
         )
+    elif "Thick" in df.columns:
+        summary = (
+            df.groupby(["Sample", "Thick"])[column_name]
+            .agg(["mean", "std"])
+            .reset_index()
+        )
     else:
         summary = df.groupby("Sample")[column_name].agg(["mean", "std"]).reset_index()
 
@@ -81,6 +87,8 @@ def nice_tick_step(max_value):
         return 100
     elif max_value < 1000:
         return 200
+    elif max_value < 5000:
+        return 500
     elif max_value < 20000:
         return 2000
     else:
