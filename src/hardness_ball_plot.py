@@ -43,7 +43,7 @@ def plot_hardness_ball_surfaces_chart(summary):
 
     # Ustawienia osi
     plt.xlabel("Nazwa próbki")
-    plt.ylabel("Twardość metodą wciskania kulki (H)")
+    plt.ylabel("Twardość metodą wciskania kulki (HB) [N/mm$^2$]")
 
     # Zmiana pozycji legendy
     plt.legend(title="Powierzchnia", loc="upper right", bbox_to_anchor=(1, 1))
@@ -93,7 +93,7 @@ def plot_hardness_ball_plate_surface_chart(summary):
 
     # Ustawienia osi
     plt.xlabel("Nazwa próbki")
-    plt.ylabel("Twardość metodą wciskania kulki (H)")
+    plt.ylabel(r"Twardość metodą wciskania kulki (HB) [N/mm$^2$]")
 
     # Linie siatki
     ax.grid(True, which="both", axis="y", linestyle="--", linewidth=0.5, alpha=0.5)
