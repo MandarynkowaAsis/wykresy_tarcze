@@ -2,7 +2,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-def plot_hardness_shore_surfaces_chart(summary):
+def plot_hardness_shore_surfaces_chart(summary, language):
     plt.figure(figsize=(10, 6))
 
     # Zamiana nazw w legendzie
@@ -42,11 +42,21 @@ def plot_hardness_shore_surfaces_chart(summary):
         )
 
     # Ustawienia osi
-    plt.xlabel("Nazwa próbki")
-    plt.ylabel("Twardość Shore'a [Shore D]")
+    if language == "pl":
+        plt.xlabel("Nazwa próbki")
+        plt.ylabel("Twardość Shore'a [Shore D]")
 
-    # Zmiana pozycji legendy
-    plt.legend(title="Powierzchnia", loc="upper right", bbox_to_anchor=(1, 1))
+        # Zmiana pozycji legendy
+        plt.legend(title="Powierzchnia", loc="upper right", bbox_to_anchor=(1, 1))
+    
+    elif language == "en":
+        plt.xlabel("Sample name")
+        plt.ylabel("Shore hardness [Shore D]")
+
+        plt.legend(title="Surface", loc="upper right", bbox_to_anchor=(1, 1))
+
+
+
 
     # Linie siatki
     ax.grid(True, which="both", axis="y", linestyle="--", linewidth=0.5, alpha=0.5)
@@ -58,7 +68,7 @@ def plot_hardness_shore_surfaces_chart(summary):
     plt.savefig("outputs/hardness_shore_surfaces.png", dpi=300, bbox_inches="tight")
 
 
-def plot_hardness_shore_plate_surface_chart(summary):
+def plot_hardness_shore_plate_surface_chart(summary, language):
 
     summary_plate = summary[summary["Plate/Print"] == "Plate"]
 
@@ -92,8 +102,12 @@ def plot_hardness_shore_plate_surface_chart(summary):
         )
 
     # Ustawienia osi
-    plt.xlabel("Nazwa próbki")
-    plt.ylabel("Twardość Shore'a [Shore D]")
+    if language == "pl":
+        plt.xlabel("Nazwa próbki")
+        plt.ylabel("Twardość Shore'a [Shore D]")
+    elif language == "en":
+        plt.xlabel("Sample name")
+        plt.ylabel("Shore hardness [Shore D]")
 
     # Linie siatki
     ax.grid(True, which="both", axis="y", linestyle="--", linewidth=0.5, alpha=0.5)

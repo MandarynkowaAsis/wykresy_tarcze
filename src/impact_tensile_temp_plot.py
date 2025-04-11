@@ -2,7 +2,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-def plot_impact_tensile_temp_chart(summary):
+def plot_impact_tensile_temp_chart(summary, language):
     plt.figure(figsize=(10, 6))
 
     # Zamiana nazw w legendzie
@@ -42,13 +42,20 @@ def plot_impact_tensile_temp_chart(summary):
         )
 
     # Ustawienia osi
-    plt.xlabel("Nazwa próbki")
-    plt.ylabel(
-        r"Rozciąganie udarowe w różnych temperaturach ($\sigma_{i}^{t}$) [kJ/m$^2$]"
-    )
+    if language == "pl":
+        plt.xlabel("Nazwa próbki")
+        plt.ylabel(
+            r"Rozciąganie udarowe w różnych temperaturach ($\sigma_{i}^{t}$) [kJ/m$^2$]"
+        )
 
-    # Zmiana pozycji legendy
-    plt.legend(title="Temperatura", loc="upper right", bbox_to_anchor=(1, 1))
+        # Zmiana pozycji legendy
+        plt.legend(title="Temperatura", loc="upper right", bbox_to_anchor=(1, 1))
+    elif language == "en":
+        plt.xlabel("Sample name")
+        plt.ylabel(r"Impact tensile strength at different temperatures ($\sigma_{i}^{t}$) [kJ/m$^2$]")
+
+        plt.legend(title="Temperature", loc="upper right", bbox_to_anchor=(1, 1))
+
 
     # Linie siatki
     ax.grid(True, which="both", axis="y", linestyle="--", linewidth=0.5, alpha=0.5)
