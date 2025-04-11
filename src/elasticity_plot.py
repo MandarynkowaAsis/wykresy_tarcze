@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_elasticity_chart(summary):
+def plot_elasticity_chart(summary, language):
     plt.figure(figsize=(10, 6))
 
     # Zamiana nazw w legendzie
@@ -42,12 +42,23 @@ def plot_elasticity_chart(summary):
             capsize=5,
         )
 
-    # Ustawienia osi
-    plt.xlabel("Nazwa próbki")
-    plt.ylabel("Współczynnik sprężystości wzdłużnej (E) [MPa]")
+    if language == "pl":
 
-    # Zmiana pozycji legendy
-    plt.legend(title="Powierzchnia", loc="upper right", bbox_to_anchor=(0.2, 1))
+    # Ustawienia osi
+        plt.xlabel("Nazwa próbki")
+        plt.ylabel("Współczynnik sprężystości wzdłużnej (E) [MPa]")
+
+        # Zmiana pozycji legendy
+        plt.legend(title="Powierzchnia", loc="upper right", bbox_to_anchor=(0.2, 1))
+
+    elif language == "en":
+
+        plt.xlabel("Sample name")
+        plt.ylabel("Longitudinal elastic modulus (E) [MPa]")
+
+        plt.legend(title="Powierzchnia", loc="upper right", bbox_to_anchor=(0.2, 1))
+
+
 
     # Dodanie linii siatki
     ax.set_yticks(np.arange(0, summary["mean"].max() + 1000, 500))

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_density_chart(summary):
+def plot_density_chart(summary, language):
     plt.figure(figsize=(10, 6))
 
     # Tworzenie wykresu słupkowego
@@ -27,8 +27,12 @@ def plot_density_chart(summary):
     ax.set_yticks(np.arange(0, summary["mean"].max() + 100, 200))
     plt.grid(axis="y", linestyle="--", alpha=0.7)
 
-    plt.xlabel("Nazwa próbki")
-    plt.ylabel(r"Gęstość $\rho$ [kg/m$^3$]")
+    if language == "pl":
+        plt.xlabel("Nazwa próbki")
+        plt.ylabel(r"Gęstość $\rho$ [kg/m$^3$]")
+    elif language == "en":
+        plt.xlabel("Sample name")
+        plt.ylabel(r"Density $\rho$ [kg/m$^3$]")
 
     # Zapis wykresu do pliku PNG
     plt.savefig("outputs/density.png", dpi=300, bbox_inches="tight")

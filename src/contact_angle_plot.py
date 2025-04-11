@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-def plot_contact_angle_chart(summary):
+def plot_contact_angle_chart(summary, language):
     plt.figure(figsize=(10, 6))
 
     # Zamiana nazw w legendzie
@@ -45,12 +45,24 @@ def plot_contact_angle_chart(summary):
             capsize=5,
         )
 
-    # Ustawienia osi
-    plt.xlabel("Nazwa próbki")
-    plt.ylabel("Kąt zwilżania [°]")  # Zmieniamy jednostki na stopnie
+    if language.strip() == 'pl':\
 
-    # Zmiana pozycji legendy
-    plt.legend(title="Powierzchnia", loc="upper right", bbox_to_anchor=(1, 1))
+        # Ustawienia osi
+        plt.xlabel("Nazwa próbki")
+        plt.ylabel("Kąt zwilżania [°]")  # Zmieniamy jednostki na stopnie
+
+        # Zmiana pozycji legendy
+        plt.legend(title="Powierzchnia", loc="upper right", bbox_to_anchor=(1, 1))
+
+    elif language == "en":
+
+        plt.xlabel("Sample name")
+        plt.ylabel("Contact angle [°]")  # Changed units to degrees
+
+        plt.legend(title="Surface", loc="upper right", bbox_to_anchor=(1, 1))
+
+
+
 
     # Linie siatki
     ax.grid(True, which="both", axis="y", linestyle="--", linewidth=0.5, alpha=0.5)

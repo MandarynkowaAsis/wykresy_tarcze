@@ -4,16 +4,8 @@ import numpy as np
 import analyze
 
 
-def plot_tensile_chart(summary, column_name):
+def plot_tensile_chart(summary, column_name, language):
     plt.figure(figsize=(10, 6))
-
-    # Mapowanie nazw kolumn na etykiety osi Y
-    y_labels = {
-        "E": r"Moduł Younga ($E$) [MPa]",
-        "sm": r"Wytrzymałość na rozciąganie ($\sigma_m$) [MPa]",
-        "em": r"Wydłużenie przy zerwaniu ($\varepsilon_m$) [%]",
-    }
-    y_label = y_labels.get(column_name, column_name)  # Jeśli brak, użyj nazwy kolumny
 
     # Zamiana nazw w legendzie dla różnych temperatur
     summary["Legenda"] = summary["Thick"].map({2: "2 mm", 4: "4 mm"})
@@ -54,12 +46,36 @@ def plot_tensile_chart(summary, column_name):
             capsize=5,
         )
 
-    # Ustawienia osi
-    plt.xlabel("Nazwa próbki")
-    plt.ylabel(y_label)  # Dynamiczny opis osi Y
+    if language == "pl":
+        # Mapowanie nazw kolumn na etykiety osi Y
+        y_labels = {
+            "E": r"Moduł Younga ($E$) [MPa]",
+            "sm": r"Wytrzymałość na rozciąganie ($\sigma_m$) [MPa]",
+            "em": r"Wydłużenie przy zerwaniu ($\varepsilon_m$) [%]",
+        }
+        y_label = y_labels.get(column_name, column_name)  # Jeśli brak, użyj nazwy kolumny
 
-    # Zmiana pozycji legendy
-    plt.legend(title="Grubość próbki", loc="upper right", bbox_to_anchor=(1, 1))
+        # Ustawienia osi
+        plt.xlabel("Nazwa próbki")
+        plt.ylabel(y_label)  # Dynamiczny opis osi Y
+
+        # Zmiana pozycji legendy
+        plt.legend(title="Grubość próbki", loc="upper right", bbox_to_anchor=(1, 1))
+
+    elif language == "en":
+        y_labels = {
+            "E": r"Young's modulus ($E$) [MPa]",
+            "sm": r"Tensile strength ($\sigma_m$) [MPa]",
+            "em": r"Elongation at break ($\varepsilon_m$) [%]",
+        }
+
+        y_label = y_labels.get(column_name, column_name)
+
+        plt.xlabel("Sample name")
+        plt.ylabel(y_label)  # Dynamic Y-axis label
+
+        plt.legend(title="Sample thickness", loc="upper right", bbox_to_anchor=(1, 1))
+
 
     # Linie siatki
     max_value = summary["mean"].max()

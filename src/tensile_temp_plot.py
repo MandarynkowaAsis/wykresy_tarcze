@@ -4,15 +4,26 @@ import matplotlib.pyplot as plt
 import analyze
 
 
-def plot_tensile_temp_chart(summary, column_name):
+def plot_tensile_temp_chart(summary, column_name, language):
     plt.figure(figsize=(12, 7))
 
-    # Mapowanie nazw kolumn na etykiety osi Y
-    y_labels = {
-        "E": r"Moduł Younga dla różnych temperatur ($E$) [MPa]",
-        "sm": r"Wytrzymałość na rozciąganie dla różnych temperatur ($\sigma_m$) [MPa]",
-        "em": r"Wydłużenie przy zerwaniu dla różnych temperatur ($\varepsilon_m$) [%]",
-    }
+    if language == "pl":
+        # Mapowanie nazw kolumn na etykiety osi Y
+        y_labels = {
+            "E": r"Moduł Younga dla różnych temperatur ($E$) [MPa]",
+            "sm": r"Wytrzymałość na rozciąganie dla różnych temperatur ($\sigma_m$) [MPa]",
+            "em": r"Wydłużenie przy zerwaniu dla różnych temperatur ($\varepsilon_m$) [%]",
+        }
+
+    elif language == "en":
+        # Mapping column names to Y-axis labels
+        y_labels = {
+            "E": r"Young's modulus at different temperatures ($E$) [MPa]",
+            "sm": r"Tensile strength at different temperatures ($\sigma_m$) [MPa]",
+            "em": r"Elongation at break at different temperatures ($\varepsilon_m$) [%]",
+        }
+
+
     y_label = y_labels.get(column_name, column_name)  # Domyślnie używa nazwy kolumny
 
     # Zamiana nazw w legendzie dla różnych temperatur
@@ -56,12 +67,22 @@ def plot_tensile_temp_chart(summary, column_name):
             capsize=5,
         )
 
-    # Ustawienia osi
-    plt.xlabel("Nazwa próbki")
-    plt.ylabel(y_label)  # Dynamiczny opis osi Y
+    if language == "pl":
 
-    # Zmiana pozycji legendy
-    plt.legend(title="Temperatura", loc="upper right", bbox_to_anchor=(1, 1))
+        # Ustawienia osi
+        plt.xlabel("Nazwa próbki")
+        plt.ylabel(y_label)  # Dynamiczny opis osi Y
+
+        # Zmiana pozycji legendy
+        plt.legend(title="Temperatura", loc="upper right", bbox_to_anchor=(1, 1))
+    elif language == "en":
+        # Axis settings
+        plt.xlabel("Sample name")
+        plt.ylabel(y_label)  # Dynamic Y-axis label
+
+        # Legend position
+        plt.legend(title="Temperature", loc="upper right", bbox_to_anchor=(1, 1))
+
 
     # Linie siatki
     max_value = summary["mean"].max()
