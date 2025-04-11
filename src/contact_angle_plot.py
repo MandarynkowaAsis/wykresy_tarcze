@@ -8,7 +8,7 @@ def plot_contact_angle_chart(summary):
 
     # Zamiana nazw w legendzie
     summary["Legenda"] = summary["Plate/Print"].replace(
-        {"Plate": "Plate surface", "Print": "Free surface"}
+        {"Plate": "Plate", "Print": "Free"}
     )
 
     # Wykres słupkowy
