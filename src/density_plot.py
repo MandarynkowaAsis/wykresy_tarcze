@@ -4,7 +4,7 @@ import numpy as np
 
 
 def plot_density_chart(summary, language):
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(6, 6))
 
     # Tworzenie wykresu słupkowego
     ax = sns.barplot(

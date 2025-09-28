@@ -5,7 +5,7 @@ import analyze
 
 
 def plot_tensile_temp_chart(summary, column_name, language):
-    plt.figure(figsize=(12, 7))
+    plt.figure(figsize=(7, 7))
 
     if language == "pl":
         # Mapowanie nazw kolumn na etykiety osi Y

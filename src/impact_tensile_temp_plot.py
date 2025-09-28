@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 def plot_impact_tensile_temp_chart(summary, language):
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(6, 6))
 
     # Zamiana nazw w legendzie
     summary["Legenda"] = (
